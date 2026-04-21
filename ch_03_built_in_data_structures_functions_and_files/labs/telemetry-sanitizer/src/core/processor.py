@@ -1,15 +1,23 @@
+from src.core.exceptions import SensorAnomalyError
+
 def clean_record(raw_line: str) -> tuple:
     """
     Lógica Pura: Transforma strings sujas em tuplas (id, valor).
     Exceção: Deve lançar SensorAnomalyError se valor > 1000.
     """
 
-    data = raw_line.replace(':', ',').replace('(', '').replace(')', '')
-    data = data.replace('SENS_01:25.5', '').strip()
-
+    data = raw_line.replace(':', ',').replace('(', '').replace(')', '').replace("'", "").strip()
     part = data.split(',')
-    identification = (part[0], part[1])
-    number = float(part[2])
+
+    if len(part) == 2:
+        identification = (part, "N/A")
+        number = float(part[1])
+    elif len(part) >= 3:
+        identification = (part, part[1])
+        number = float(part[2])
+
+    if number > 1000:
+        raise SensorAnomalyError(f"Anomalia detectada: {number}")
 
     return (identification, number)
 
