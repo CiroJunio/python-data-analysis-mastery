@@ -22,9 +22,16 @@ def aggregate_peaks(data_stream):
     Retorna: (total_unicos, dict_picos)
     """
 
-    for data in data_stream:
-        clean_record(data)
-        clean = data.strip()
+    sensores_vistos = set()
+    picos_calor = dict()
+
+    for linha in data_stream:
+        info, valor = clean_record(linha)
+        sensores_vistos.add(info)
+        if info not in picos_calor or valor > picos_calor.get(info, 0):
+            picos_calor[info] = valor
+
+    return len(sensores_vistos), picos_calor
 
     # TODO: Implementar usando apenas o stream (iteração única)
     pass
