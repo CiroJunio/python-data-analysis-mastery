@@ -15,7 +15,7 @@ run: ## Executa a missão principal (main.py)
 	$(EXEC) python main.py
 
 test: ## Executa o Verificador de Sanidade (Asserts)
-	$(EXEC) python tests/sanity_check.py
+	$(EXEC) python -m tests.sanity_check
 
 clean: ## Destrói o container, imagens e limpa lixo do Python
 	$(DC) down --rmi all --volumes --remove-orphans
