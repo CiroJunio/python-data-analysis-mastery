@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+env/
+venv/
+ENV/
+
+# Docker and OS
+.docker/
+.DS_Store
+
+# Jupyter / IPython [cite: 10, 150]
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+
+# Data/Logs (Não enviamos datasets brutos pesados)
+data/*.log
+data/*.csv

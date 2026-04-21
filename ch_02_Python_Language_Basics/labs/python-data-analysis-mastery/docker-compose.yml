@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  lab:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - TERM=xterm-256color
+    stdin_open: true # Permite interação 
+    tty: true
+    command: ipython
