@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
-# Instalando dependências de sistema mínimas
+# Instalando dependências de sistema
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
@@ -15,5 +15,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# O comando padrão abre o IPython para introspecção ativa
 CMD ["ipython"]

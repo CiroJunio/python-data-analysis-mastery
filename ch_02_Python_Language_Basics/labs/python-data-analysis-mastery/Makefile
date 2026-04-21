@@ -1,14 +1,14 @@
-DC = docker-compose
+DC = docker compose
 
 .PHONY: setup run clean test
 
-setup: ## Constrói a redoma e prepara o ambiente
+setup: ## Constrói e prepara o ambiente
 	touch requirements.txt
 	# Adicionando o básico para o capítulo 2: IPython 
 	echo "ipython" > requirements.txt
 	$(DC) build
 
-run: ## Entra no laboratório (IPython interativo)
+run: ## Entra no IPython interativo
 	$(DC) run --rm lab
 
 test: ## Executa os testes de integridade de sinais
