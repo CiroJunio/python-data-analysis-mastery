@@ -10,10 +10,10 @@ def clean_record(raw_line: str) -> tuple:
     part = data.split(',')
 
     if len(part) == 2:
-        identification = (part, "N/A")
+        identification = (part[0], "N/A")
         number = float(part[1])
     elif len(part) >= 3:
-        identification = (part, part[1])
+        identification = (part[0], part[1])
         number = float(part[2])
 
     if number > 1000:
@@ -34,10 +34,14 @@ def aggregate_peaks(data_stream):
     picos_calor = dict()
 
     for linha in data_stream:
-        info, valor = clean_record(linha)
-        sensores_vistos.add(info)
-        if info not in picos_calor or valor > picos_calor.get(info, 0):
-            picos_calor[info] = valor
+        try:
+            info, valor = clean_record(linha)
+            sensores_vistos.add(info)
+            if info not in picos_calor or valor > picos_calor.get(info, 0):
+                picos_calor[info] = valor
+        except SensorAnomalyError as e:
+            print(f"Pulando linha inválida: {e}")
+
 
     return len(sensores_vistos), picos_calor
 
