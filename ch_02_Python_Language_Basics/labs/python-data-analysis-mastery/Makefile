@@ -5,11 +5,14 @@ DC = docker compose
 setup: ## Constrói e prepara o ambiente
 	touch requirements.txt
 	# Adicionando o básico para o capítulo 2: IPython 
-	echo "ipython" > requirements.txt
+	echo "ipython\npytest" > requirements.txt
 	$(DC) build
 
 run: ## Entra no IPython interativo
 	$(DC) run --rm lab
+
+run-main: ## Para execução de "mercado" (A Fábrica)
+	$(DC) run --rm lab python main.py
 
 test: ## Executa os testes de integridade de sinais
 	$(DC) run --rm lab python -m pytest tests/
