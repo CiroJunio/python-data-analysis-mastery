@@ -6,14 +6,19 @@ def clean_record(raw_line: str) -> tuple:
     Exceção: Deve lançar SensorAnomalyError se valor > 1000.
     """
 
-    data = raw_line.replace(':', ',').replace('(', '').replace(')', '').replace("'", "").strip()
+    data = raw_line.replace(':', ',') \
+                   .replace('(', '') \
+                   .replace(')', '') \
+                   .replace("'", "") \
+                   .strip()
+    
     part = data.split(',')
 
     if len(part) == 2:
         identification = (part[0], "N/A")
         number = float(part[1])
     elif len(part) >= 3:
-        identification = (part[0], part[1])
+        identification = (part[0].strip(), part[1].strip())
         number = float(part[2])
 
     if number > 1000:
