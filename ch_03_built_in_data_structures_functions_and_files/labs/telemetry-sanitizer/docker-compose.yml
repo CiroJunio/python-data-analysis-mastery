@@ -1,0 +1,11 @@
+services:
+  lab-sanitizer:
+    build: .
+    container_name: telemetry_processor
+    volumes:
+      - .:/app  # Reflete alterações do código instantaneamente
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_PATH=/app/data/telemetry.log
+    stdin_open: true
+    tty: true
