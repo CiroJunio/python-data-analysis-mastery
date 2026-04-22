@@ -1,3 +1,4 @@
+import math
 from src.core.exceptions import SensorAnomalyError
 
 def clean_record(raw_line: str) -> tuple:
@@ -21,6 +22,9 @@ def clean_record(raw_line: str) -> tuple:
         identification = (part[0].strip(), part[1].strip())
         number = float(part[2])
 
+    if (math.isinf(number) or math.isnan(number)):
+        raise SensorAnomalyError(f"Dado corrompido: {type(number)}")
+
     if number > 1000:
         raise SensorAnomalyError(f"Anomalia detectada: {number}")
 
@@ -37,6 +41,8 @@ def aggregate_peaks(data_stream):
 
     sensores_vistos = set()
     picos_calor = dict()
+
+    count = 0
 
     for linha in data_stream:
         try:
