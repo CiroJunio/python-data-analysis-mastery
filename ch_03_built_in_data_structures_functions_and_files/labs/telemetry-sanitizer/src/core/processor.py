@@ -1,7 +1,7 @@
 import math
 from src.core.exceptions import SensorAnomalyError
 
-def clean_record(raw_line: str) -> tuple:
+def clean_record(raw_line: str) ->   tuple:
     """
     Lógica Pura: Transforma strings sujas em tuplas (id, valor).
     Exceção: Deve lançar SensorAnomalyError se valor > 1000.
@@ -48,6 +48,13 @@ def aggregate_peaks(data_stream):
         try:
             info, valor = clean_record(linha)
             sensores_vistos.add(info)
+            count = count + 1
+            if (count >= 10000):
+                print(f"Relatório da Janela: {picos_calor}")
+                sensores_vistos.clear()
+                picos_calor.clear()
+                # O correto seria jogar esses dados para um bd ou em algum arquivo
+                count = 0
             if info not in picos_calor or valor > picos_calor.get(info, 0):
                 picos_calor[info] = valor
         except SensorAnomalyError as e:
