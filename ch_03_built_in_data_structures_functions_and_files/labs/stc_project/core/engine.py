@@ -3,6 +3,9 @@ from typing import Generator, Tuple, Dict
 def transaction_stream(path: str) -> Generator[bytes, None, None]:
     """Lê o arquivo em modo binário puro."""
     # Sua missão: Use 'rb' e yield 
+    with open("../data/archive.txt", "rb") as f:
+        for line in f:
+            yield line
     pass
 
 def parse_and_clean(raw_line: bytes) -> Tuple[str, str, float]:
