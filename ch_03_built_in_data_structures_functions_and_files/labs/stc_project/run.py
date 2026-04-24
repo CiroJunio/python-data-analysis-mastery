@@ -1,14 +1,14 @@
-from drivers.log_generator import generate_chaotic_log
-from core.engine import (
-    transaction_stream,
-    parse_and_clean,
-    filter_unique_transactions
-)
+# No seu run.py
+from core.engine import transaction_stream, filter_unique_transactions
 
 def run():
-    stream = transaction_stream('/data/archive.txt')
-    clean = parse_and_clean(stream)
+    path = "data/archive.txt" # Ajuste o caminho para o Docker
+    stream = transaction_stream(path)
+    resultado = filter_unique_transactions(stream)
     
+    print("Processamento concluído com sucesso!")
+    for ativo, volume in resultado.items():
+        print(f"Ativo: {ativo} | Volume Total: {volume:.2f}")
 
 if __name__ == "__main__":
-    run() 
+    run()
