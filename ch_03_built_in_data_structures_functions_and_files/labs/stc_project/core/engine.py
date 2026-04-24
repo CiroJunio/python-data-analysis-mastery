@@ -1,4 +1,5 @@
 from typing import Generator, Tuple, Dict
+import sqlite3
 
 def transaction_stream(path: str) -> Generator[bytes, None, None]:
     """Lê o arquivo em modo binário puro."""
@@ -30,21 +31,24 @@ def parse_and_clean(raw_line: bytes) -> Tuple[str, str, float]:
     return result
     pass
 
-def filter_unique_transactions(stream: Generator) -> Dict[str, float]:
-    """Processa o fluxo garantindo unicidade sem estourar a RAM."""
-    # Dica: O que é imutável serve de chave no Dict 
+def filter_unique_transactions(stream: Generator, db_path: str) -> Dict[str, float]:
+    
+    with sqlite3.connect(db_path) as conn:
+        for line in stream:
+            pepita = parse_and_clean(line)
+            if pepita:
+                d, e, v = pepita
+                unique_key = f"{d}_{e}_{v}"
+                conn.execute(
+                    "INSERT OR IGNORE INTO transacoes (hash_id, data_log, ativo, volume) VALUES (?, ?, ?, ?)",
+                    (unique_key, d, e, v)
+                )
+        
+        cursor = conn.execute("SELECT ativo, SUM(volume) FROM transacoes GROUP BY ativo")
+        return dict(cursor.fetchall())
+                    
 
-    dict_stream = dict()
-    visas = set()
 
-    for line in stream:
-        stream_clean = parse_and_clean(line)
-        if stream_clean:
-            if stream_clean not in visas:
-                visas.add(stream_clean) 
-                
-                _, enterpise, values = stream_clean
-                dict_stream[enterpise] = dict_stream.get(enterpise, 0.0) + values
 
     return dict_stream
     pass

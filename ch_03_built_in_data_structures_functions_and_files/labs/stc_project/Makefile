@@ -16,4 +16,5 @@ profile:
 clean:
 	docker compose down
 	rm -rf data/*.txt
+	rm -rf data/*.db
 	find . -type d -name "__pycache__" -exec rm -rf {} +

@@ -1,10 +1,15 @@
-# No seu run.py
 from core.engine import transaction_stream, filter_unique_transactions
+from core.schema import init_db
+from drivers.log_generator import generate_chaotic_log
 
 def run():
-    path = "data/archive.txt" # Ajuste o caminho para o Docker
+    path = "data/archive.txt"
+    path_db = "data/final.db"
+    init_db(path_db)
+    # generate_chaotic_log(path, 10000)
+
     stream = transaction_stream(path)
-    resultado = filter_unique_transactions(stream)
+    resultado = filter_unique_transactions(stream, path_db)
     
     print("Processamento concluído com sucesso!")
     for ativo, volume in resultado.items():
