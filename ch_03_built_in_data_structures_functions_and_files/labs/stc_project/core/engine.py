@@ -12,8 +12,23 @@ def parse_and_clean(raw_line: bytes) -> Tuple[str, str, float]:
     """Decodifica, limpa e normaliza os dados."""
     # Sua missão: Trate UnicodeDecodeError aqui 
     # Lembre-se: Use .strip().title() para strings 
+    try:
+        decodes = raw_line.decode('utf-8')
+    except UnicodeDecodeError:
+        print("Dados corrompidos!")
+        return ()
 
+    clean_edges = decodes.strip().title()
+    split_line = clean_edges.split(',')
 
+    try:
+        dates, enterprise, values = split_line
+        real_values = float(values)
+        result = (dates, enterprise, real_values)
+    except (UnicodeDecodeError, ValueError, IndexError):
+        result = ()
+
+    return result
     pass
 
 def filter_unique_transactions(stream: Generator) -> Dict[str, float]:

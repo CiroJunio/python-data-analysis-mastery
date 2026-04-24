@@ -1,7 +1,14 @@
 from drivers.log_generator import generate_chaotic_log
+from core.engine import (
+    transaction_stream,
+    parse_and_clean,
+    filter_unique_transactions
+)
 
 def run():
-    generate_chaotic_log("data/archive.txt", 10000)
+    stream = transaction_stream('/data/archive.txt')
+    clean = parse_and_clean(stream)
+    
 
 if __name__ == "__main__":
-    run() # O gatilho que faltava
+    run() 
