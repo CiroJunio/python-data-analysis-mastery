@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  fleet-lab:
+    build: .
+    container_name: fleet_health_container
+    volumes:
+      - .:/app  # Hot-reload: seu código reflete no container na hora
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DEFAULT_DTYPE=float64 # O padrão NumPy para computação numérica [cite: 166, 181]
+    stdin_open: true
+    tty: true

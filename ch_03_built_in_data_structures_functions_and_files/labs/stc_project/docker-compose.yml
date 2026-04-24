@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  stc-engine:
+    build: .
+    volumes:
+      - .:/app
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 64M
+    restart: "no"

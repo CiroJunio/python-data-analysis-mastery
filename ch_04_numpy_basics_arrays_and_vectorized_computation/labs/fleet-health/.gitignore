@@ -1,0 +1,19 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Ambientes Virtuais
+.venv/
+venv/
+env/
+
+# NumPy/Data files
+data/*.npy
+data/*.npz
+
+# Docker
+.docker-cache/
+
+# Sistema
+.DS_Store
+.env
