@@ -12,5 +12,5 @@ def generate_sensor_chaos(n_sensors=1000, n_points=10000):
     base_signal = np.random.normal(loc=0, scale=1.0, size=(n_sensors, n_points))
     
     # Injeção de "Caos": picos aleatórios de voltagem
-    anomalies = np.random.choice([50], size=(n_sensors, n_points), p=[0.999, 0.001])
+    anomalies = np.random.choice([0, 50], size=(n_sensors, n_points), p=[0.95, 0.05])
     return base_signal + anomalies

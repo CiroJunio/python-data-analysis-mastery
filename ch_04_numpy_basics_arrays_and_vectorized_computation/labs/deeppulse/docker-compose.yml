@@ -3,12 +3,12 @@ services:
     build: .
     volumes:
       - .:/app
-    command: python tests/sanity_check.py
+    command: python -m tests.sanity_check
     deploy:
       resources:
         limits:
           cpus: '1.0'        
           memory: 300M      
     environment:
-      - PYTHONOPTIMIZE=1    
-      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONOPTIMIZE=/app
+      - PYTHONOPTIMIZE=1
