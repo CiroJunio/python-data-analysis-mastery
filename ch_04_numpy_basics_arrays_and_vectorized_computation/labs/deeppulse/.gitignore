@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+
+# NumPy Persistence [cite: 1349, 1356]
+*.npy
+*.npz
+
+# Docker / OS
+.DS_Store
+.dockerignore
