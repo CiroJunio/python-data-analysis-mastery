@@ -16,14 +16,12 @@ def parse_and_clean(raw_line: bytes) -> Tuple[str, str, float]:
     try:
         decodes = raw_line.decode('utf-8')
     except UnicodeDecodeError:
-        print("Dados corrompidos!")
         return ()
 
-    clean_edges = decodes.strip().title()
-    split_line = clean_edges.split(',')
+    parts = [p.strip().title() for p in decodes.split(',')]
 
     try:
-        dates, enterprise, values = split_line
+        dates, enterprise, values = parts
         real_values = float(values)
         result = (dates, enterprise, real_values)
     except (UnicodeDecodeError, ValueError, IndexError):
